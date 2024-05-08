@@ -8,10 +8,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Run k6 local test
-        uses: grafana/k6-action@v0.3.1
+        uses: grafana/k6-action@v0.49.0
         with:
           filename: performance/scriptBase.js
           flags: --out json=results.json
+        env:
+          K6_WEB_DASHBOARD: true
+          K6_WEB_DASHBOARD_EXPORT: reports\load-test-servicio.html
       - name: Upload performance test results
         uses: actions/upload-artifact@v3
         with:
