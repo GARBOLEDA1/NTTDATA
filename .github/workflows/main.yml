@@ -11,10 +11,9 @@ jobs:
         uses: grafana/k6-action@v0.3.1
         with:
           filename: performance/scriptBase.js
-        env:
-          K6_WEB_DASHBOARD: true
-          K6_WEB_DASHBOARD_EXPORT: reports\load-test-servicio.html
-      - uses: actions/upload-artifact@v4
+          flags: --out json=results.json
+      - name: Upload performance test results
+        uses: actions/upload-artifact@v3
         with:
-          name: my-artifact
-          path: reports\load-test-servicio.html
+          name: k6-report
+          path: results.json
