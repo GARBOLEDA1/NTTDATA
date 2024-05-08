@@ -1,0 +1,12 @@
+Correr script sin gráficos
+
+k6 run performance\scriptBase.js
+
+
+Correr siempre en Consola DOS (CMD)
+
+set "K6_WEB_DASHBOARD=true" && set "K6_WEB_DASHBOARD_EXPORT=reports\load-test-Arquetipo.html" && k6 run performance\scriptBase.js
+
+
+set "K6_WEB_DASHBOARD=true" && set "K6_WEB_DASHBOARD_EXPORT=reports\load-test-servicio.html" && k6 run performance\script.js
+
