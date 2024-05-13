@@ -11,7 +11,7 @@ jobs:
         uses: InnovacionTecnologicaCSP/qa-k6-action@main
         with:
           filename: performance/scriptBase.js
-          flags: --export test-report.html test-result.json
+          flags: --export test-result.json
       - name: Upload performance test results
         uses: actions/upload-artifact@v4
         with:
