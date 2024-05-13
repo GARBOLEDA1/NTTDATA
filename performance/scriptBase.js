@@ -13,7 +13,7 @@ export const options = {
   //  { target: 30, duration: '60m' }, // Tiempo de ejecución 
   //  { target: 0, duration: '30s' },  //Configuración Ramp Down
   { target: 3, duration: '3s' },
-  { target: 3, duration: '1m' },
+  { target: 3, duration: '5s' },
   { target: 0, duration: '3s' },
   ],
   thresholds: {
