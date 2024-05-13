@@ -1,0 +1,19 @@
+name: Main Workflow
+on: [workflow_dispatch]
+jobs:
+  build:
+    name: Run k6 test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run k6 local test
+        uses: grafana/k6-action@v0.3.1
+        with:
+          filename: performance/scriptBase.js
+          flags: --export test-report.html test-result.json
+      - name: Upload performance test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-report
+          path: test-report.html
