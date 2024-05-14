@@ -10,3 +10,7 @@ set "K6_WEB_DASHBOARD=true" && set "K6_WEB_DASHBOARD_EXPORT=reports\load-test-Ar
 
 set "K6_WEB_DASHBOARD=true" && set "K6_WEB_DASHBOARD_EXPORT=reports\load-test-servicio.html" && k6 run performance\script.js
 
+set "K6_WEB_DASHBOARD=true" && set "K6_WEB_DASHBOARD_EXPORT=.\puc-performance-test\reports\load-test-scriptBase.html" && k6 run .\puc-performance-test\performance\scriptBase.js
+
+
+
