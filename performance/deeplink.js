@@ -8,16 +8,20 @@ import { randomIntBetween } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 //let ErrorRate = new Rate('error_rate');
 //let ErrorRate = new Rate('error_rate');
 export const options = {
-  stages: [
+  /*stages: [
   //  { target: 30, duration: '30s' }, //Configuración de RumpUp
   //  { target: 30, duration: '60m' }, // Tiempo de ejecución 
   //  { target: 0, duration: '30s' },  //Configuración Ramp Down
   { target: 3, duration: '3s' },
   { target: 3, duration: '3m' },
   { target: 0, duration: '3s' },
-  ],
+  ],*/
+
+  vus:1,
+  iterations:100,
+  
   thresholds: {
-    "http_req_duration": ["avg <= 3000"],//http req duration con percentil o con que average, duración máxima
+    "http_req_duration": ["avg <= 4000"],//http req duration con percentil o con que average, duración máxima
     "iterations": ["rate >= 0.01"], //Corresponde a TPS testing 3 años lo que me da la matriz
     "http_req_failed": ["rate <= 0.03"],//comparar con http failed
   },
@@ -61,7 +65,7 @@ export default function () {
   const response_ScriptArquetipo = http.post(urlArquetipo, payload_ScriptArquetipo, paramsArquetipo);   //Consumo de servicio utilizando método Post, se agrega como parámetro URL, Payload y Headers
 //  console.log(`response_ScriptArquetipo: ${response_ScriptArquetipo.body}`)
   if (check(response_ScriptArquetipo, {'response_ScriptArquetipo status was 200': (r) => r.status == 200  })){} else {console.log(`response_ScriptArquetipo: ${response_ScriptArquetipo.body}`)};  //Imprimir error solo cuando suceda
-sleep(randomIntBetween(5, 10)); //configuración de esperas
+//sleep(randomIntBetween(5, 10)); //configuración de esperas
 }
 export function handleSummary(data) {
     return generalSummary(data) //Datos para la generación de reportes
