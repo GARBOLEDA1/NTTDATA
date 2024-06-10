@@ -21,7 +21,7 @@ export const options = {
   iterations:12000,
   
   thresholds: {
-    "http_req_duration": ["avg <= 4000"],//http req duration con percentil o con que average, duración máxima
+    "http_req_duration": ["avg <= 4"],//http req duration con percentil o con que average, duración máxima
     "iterations": ["rate >= 0.01"], //Corresponde a TPS testing 3 años lo que me da la matriz
     "http_req_failed": ["rate <= 0.03"],//comparar con http failed
   },
