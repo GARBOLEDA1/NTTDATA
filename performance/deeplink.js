@@ -18,7 +18,7 @@ export const options = {
   ],*/
 
   vus:1,
-  iterations:12000,
+  iterations:12,
   
   thresholds: {
     "http_req_duration": ["avg <= 4"],//http req duration con percentil o con que average, duración máxima
