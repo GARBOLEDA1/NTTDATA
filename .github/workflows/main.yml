@@ -15,4 +15,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: k6-report
-          path: load-test-scriptBase.html
+          path: load-test-deeplink4jun.html
