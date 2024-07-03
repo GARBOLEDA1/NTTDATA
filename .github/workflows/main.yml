@@ -22,8 +22,6 @@ jobs:
           
       - name: Run k6 tests and generate HTML report
         env:
-          K6_CLOUD_TOKEN: ${{ secrets.K6_CLOUD_TOKEN }}  # Si usas k6 cloud
-          K6_COMMAND: ${{ inputs.cloud == 'true' && echo 'cloud' || echo 'run' }}
           K6_JSON_OUTPUT: "load-test-summary.json"
           K6_HTML_REPORT: "load-test-report.html"
         run: |
