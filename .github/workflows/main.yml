@@ -24,18 +24,18 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Install k6-reporter
+      - name: Install k6-html-reporter
         run: |
-          npm install -g k6-reporter
+          npm install k6-html-reporter --save-dev
 
-      - name: Run k6 tests with Web Dashboard Export
+      - name: Run k6 tests
         run: |
           k6 run --out json=output.json performance/deeplink.js
         continue-on-error: true
 
-      - name: Convert JSON to HTML
+      - name: Generate HTML Report
         run: |
-          k6-reporter output.json output.html
+          node generateReport.js
 
       - name: Upload performance test results (JSON)
         uses: actions/upload-artifact@v4
