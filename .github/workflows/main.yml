@@ -10,7 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         
-      - name: Install k6
+      - name: Install k6 and k6-reporter
         run: |
           sudo apt-get update
           sudo apt-get install -y gnupg2
@@ -18,32 +18,32 @@ jobs:
           echo "deb https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
           sudo apt-get update
           sudo apt-get install -y k6
+          sudo npm install -g k6-reporter
           
-      - name: Run k6 tests with Web Dashboard Export
+      - name: Run k6 tests and generate HTML report
         env:
-          K6_WEB_DASHBOARD_EXPORT: "dashboard.json"
+          K6_CLOUD_TOKEN: ${{ secrets.K6_CLOUD_TOKEN }}  # Si usas k6 cloud
+          K6_COMMAND: ${{ inputs.cloud == 'true' && echo 'cloud' || echo 'run' }}
+          K6_JSON_OUTPUT: "load-test-summary.json"
+          K6_HTML_REPORT: "load-test-report.html"
         run: |
-          k6 run --out json=${K6_WEB_DASHBOARD_EXPORT} performance/deeplink.js
-        continue-on-error: true
+          # Ejecuta el comando k6 y asegura que el reporte se genere incluso si k6 falla
+          sh -c "k6 run performance/deeplink.js --summary-export=$K6_JSON_OUTPUT" || true
 
-      - name: Convert JSON to HTML
-        run: |
-          sudo apt-get install -y jq # Ensure jq is installed for processing JSON
-          if k6 report --help | grep -q 'Usage:'; then
-            k6 report --json dashboard.json --output dashboard.html
-          else
-            echo "k6 report command not available in this version of k6"
-            exit 1
-          fi
+          # Genera el reporte HTML usando k6-reporter
+          k6-reporter $K6_JSON_OUTPUT $K6_HTML_REPORT
 
+          # Imprime la ubicación del reporte
+          echo "Report generated at $K6_HTML_REPORT"
+          
       - name: Upload performance test results (HTML)
         uses: actions/upload-artifact@v4
         with:
           name: k6-report-html
-          path: dashboard.html
+          path: load-test-report.html
 
       - name: Upload performance test results (JSON)
         uses: actions/upload-artifact@v4
         with:
           name: k6-report-json
-          path: dashboard.json
+          path: load-test-summary.json
