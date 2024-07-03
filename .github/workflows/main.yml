@@ -18,19 +18,33 @@ jobs:
           echo "deb https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
           sudo apt-get update
           sudo apt-get install -y k6
-          
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Install k6-reporter
+        run: |
+          npm install -g k6-reporter
+
       - name: Run k6 tests with Web Dashboard Export
         run: |
-          export K6_WEB_DASHBOARD_EXPORT=load-test-scriptBase.html && k6 run --out json=output.json performance/deeplink.js
+          k6 run --out json=output.json performance/deeplink.js
         continue-on-error: true
+
+      - name: Convert JSON to HTML
+        run: |
+          k6-reporter output.json output.html
 
       - name: Upload performance test results (JSON)
         uses: actions/upload-artifact@v4
         with:
           name: k6-report-json
           path: output.json
+
       - name: Upload performance test results (HTML)
         uses: actions/upload-artifact@v4
         with:
           name: k6-report-html
-          path: load-test-scriptBase.html
+          path: output.html
