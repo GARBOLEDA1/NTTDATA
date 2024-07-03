@@ -33,10 +33,6 @@ jobs:
           k6 run --out json=output.json performance/deeplink.js
         continue-on-error: true
 
-      - name: Generate HTML Report
-        run: |
-          node generateReport.js
-
       - name: Upload performance test results (JSON)
         uses: actions/upload-artifact@v4
         with:
