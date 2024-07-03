@@ -21,9 +21,14 @@ jobs:
           
       - name: Run k6 tests with Web Dashboard Export
         run: |
-          export K6_WEB_DASHBOARD_EXPORT=load-test-scriptBase.html && k6 run performance/deeplink.js
+          export K6_WEB_DASHBOARD_EXPORT=load-test-scriptBase.html && k6 run --out json=output.json performance/deeplink.js
         continue-on-error: true
 
+      - name: Upload performance test results (JSON)
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-report-json
+          path: output.json
       - name: Upload performance test results (HTML)
         uses: actions/upload-artifact@v4
         with:
