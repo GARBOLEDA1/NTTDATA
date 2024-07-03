@@ -21,7 +21,7 @@ jobs:
           
       - name: Run k6 tests with Web Dashboard Export
         run: |
-          k6 run --out html=load-test-deep.html performance/deeplink.js
+          export K6_WEB_DASHBOARD_EXPORT=load-test-scriptBase.html && k6 run performance/deeplink.js
         continue-on-error: true
 
       - name: Upload performance test results (HTML)
