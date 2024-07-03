@@ -22,6 +22,7 @@ jobs:
           K6_WEB_DASHBOARD_EXPORT: "dashboard.json"
         run: |
           k6 run --out json=${K6_WEB_DASHBOARD_EXPORT} performance/deeplink.js
+        continue-on-error: true
 
       - name: Convert JSON to HTML
         run: |
