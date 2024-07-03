@@ -1,9 +1,11 @@
 name: Main Workflow
 on: [workflow_dispatch]
+
 jobs:
   build:
     name: Run k6 test
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -16,7 +18,7 @@ jobs:
           echo "deb https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
           sudo apt-get update
           sudo apt-get install -y k6
-
+          
       - name: Run k6 tests with Web Dashboard Export
         env:
           K6_WEB_DASHBOARD_EXPORT: "dashboard.json"
@@ -26,7 +28,13 @@ jobs:
 
       - name: Convert JSON to HTML
         run: |
-          k6 report --json dashboard.json --output dashboard.html
+          sudo apt-get install -y jq # Ensure jq is installed for processing JSON
+          if k6 report --help | grep -q 'Usage:'; then
+            k6 report --json dashboard.json --output dashboard.html
+          else
+            echo "k6 report command not available in this version of k6"
+            exit 1
+          fi
 
       - name: Upload performance test results (HTML)
         uses: actions/upload-artifact@v4
