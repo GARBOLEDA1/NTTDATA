@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<testsuites tests="3" failures="0">
-<testsuite name="k6 thresholds" tests="3" failures="0"><testcase name="iterations - rate &gt;= 0.01" />
-<testcase name="http_req_duration - avg &lt;= 3000" />
-<testcase name="http_req_failed - rate &lt;= 0.03" />
+<testsuites tests="3" failures="1">
+<testsuite name="k6 thresholds" tests="3" failures="1"><testcase name="http_req_failed - rate &lt;= 0.03"><failure message="failed" /></testcase>
+<testcase name="http_req_duration - avg &lt;= 4000" />
+<testcase name="iterations - rate &gt;= 0.01" />
 </testsuite >
 </testsuites >
