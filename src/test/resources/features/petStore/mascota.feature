@@ -1,30 +1,47 @@
-Feature: Prueba PetStore con Karate
+Feature: CRUD de mascota en PetStore
 
   Background:
     * url url
-    * def petId = '9223372036854775807'
+    * def petId = Math.floor(Math.random() * 10000)
 
-  Scenario: Añadir una mascota
+  Scenario: Crear, consultar y actualizar mascota
     Given path 'pet'
-    And request { id: petId, name: 'Firulais', status: 'available' }
+    And request
+    """
+    {
+      "id": #(petId),
+      "category": { "id": 0, "name": "string" },
+      "name": "Firulais",
+      "photoUrls": [ "string" ],
+      "tags": [ { "id": 0, "name": "string" } ],
+      "status": "available"
+    }
+    """
     When method post
     Then status 200
-    And match response.name == 'Firulais'
+    * def createdId = response.id
 
-  Scenario: Consultar mascota por ID
-    Given path 'pet', petId
+    Given path 'pet', createdId
     When method get
     Then status 200
-    And match response.id == petId
+    And match response.id == createdId
 
-  Scenario: Actualizar mascota
     Given path 'pet'
-    And request { id: petId, name: 'Max', status: 'sold' }
+    And request
+    """
+    {
+      "id": #(createdId),
+      "category": { "id": 0, "name": "string" },
+      "name": "Max",
+      "photoUrls": [ "string" ],
+      "tags": [ { "id": 0, "name": "string" } ],
+      "status": "sold"
+    }
+    """
     When method put
     Then status 200
     And match response.status == 'sold'
 
-  Scenario: Consultar mascota por estatus
     Given path 'pet', 'findByStatus'
     And param status = 'sold'
     When method get
