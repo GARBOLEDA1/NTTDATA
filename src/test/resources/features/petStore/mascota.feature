@@ -1,4 +1,4 @@
-Feature: CRUD de mascota en PetStore
+Feature: Creacion y Consulta de mascota en PetStore
 
   Background:
     * url url
