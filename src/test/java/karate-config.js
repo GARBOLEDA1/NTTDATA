@@ -9,14 +9,14 @@ function fn() {
     karate.log('ENV DES >>>>>>>>>>>>>');
   }
 
-  var petstore = 'https://petstore.swagger.io';
-  // var petstore = karate.properties['url'];
+  // Define la base URL de la API
+  var url = 'https://petstore.swagger.io/v2/';
 
   var config = {
     env: env,
     myVarName: 'someValue',
-    petstore: petstore
-  }
+    url: url
+  };
 
   return config;
 }

@@ -10,15 +10,21 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'com.intuit.karate:karate-junit5:1.2.0'
+    // Actualizamos a la versión más reciente de Karate JUnit5
+    testImplementation 'com.intuit.karate:karate-junit5:1.4.0'
+    // Reportes adicionales (opcional)
     testImplementation 'net.masterthought:cucumber-reporting:5.7.0'
 }
 
 test {
+    // Usar JUnit5 como plataforma de ejecución
     useJUnitPlatform()
+
+    // Propiedades opcionales para Karate
     systemProperty "url", System.properties.getProperty("url")
     systemProperty "karate.options", System.properties.getProperty("karate.options")
     systemProperty "karate.env", System.properties.getProperty("karate.env")
+
     outputs.upToDateWhen { false }
 }
 
