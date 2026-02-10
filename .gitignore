@@ -1,0 +1,16 @@
+# IntelliJ project files
+.idea
+*.iml
+*.ipr
+*.iws
+# carpeta de visualcode
+.vscode
+
+### Maven template
+target/
+gradle/
+.DS_Store
+.gradle
+build
+bin
+.scannerwork
