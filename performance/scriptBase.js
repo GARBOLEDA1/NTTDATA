@@ -3,7 +3,6 @@ import { check, sleep } from 'k6';
 import { Counter, Rate } from 'k6/metrics';
 import { SharedArray } from 'k6/data';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
-import { generalSummary } from '../summaryConfig.js';
 import { randomIntBetween } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 //let ErrorRate = new Rate('error_rate');
 //let ErrorRate = new Rate('error_rate');
@@ -22,6 +21,7 @@ export const options = {
     "http_req_failed": ["rate <= 0.03"],//comparar con http failed
   },
 };
+
 const csvDataUsuariosArquetipo = new SharedArray('cif', function () {    //Leer archivo CSV con data
   return papaparse.parse(open('../data/dataUsuariosArquetipo.csv'), {
     header: true,
@@ -29,6 +29,27 @@ const csvDataUsuariosArquetipo = new SharedArray('cif', function () {    //Leer 
 });
 
 let req_Arquetipo = JSON.parse(open('../request/requestScriptArquetipo.json')); //Variable que almacena archivo JSON
+
+
+// Función para convertir un objeto en parámetros URL codificados
+function toUrlEncoded(obj) {
+  return Object.keys(obj)
+    .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]))
+    .join('&');
+}
+
+
+// Función para generar una cadena alfanumérica de 8 caracteres
+function generateRandomString(length) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'; // Alfabeto alfanumérico
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+}
+
+
 export default function () {
   const base_url = 'https://petstore.swagger.io'
   const urlArquetipo = `${base_url}/v2/user/createWithList`; //path que se agrega al dominio dl servicio
@@ -47,12 +68,23 @@ export default function () {
   console.log(` firs name: ${name}`);
   req_Arquetipo[0].firstName = name;    //Setear nombre desde csv al archivo json
 
+  /*
+  const index = (__VU - 1) % csvDataLogin.length;  // Esto asigna los registros de manera cíclica
+  const username = csvDataLogin[index]['username']; // Obtener el username del archivo CSV, la variable puede tener nombre diferente al csv
+  const customerId = csvDataLogin[index]['customerId']; // Obtener el customerId del archivo CSV
+  */
+
+  /*
+  Convertir el objeto a parámetros URL codificados
+  const payload_login = toUrlEncoded(req_Login);
+  */
+
   const payload_ScriptArquetipo = JSON.stringify(req_Arquetipo);  //Crear Payload para consumo de servicio
-  console.log(`payload script arquetipo: ${payload_ScriptArquetipo}`);
+
+  console.log(`payload script arquetipo: ${payload_ScriptArquetipo}`); //Imprime en consola un mensaje con una variable
+  
   const response_ScriptArquetipo = http.post(urlArquetipo, payload_ScriptArquetipo, paramsArquetipo);   //Consumo de servicio utilizando método Post, se agrega como parámetro URL, Payload y Headers
+  
   if (check(response_ScriptArquetipo, {'response_ScriptArquetipo status was 200': (r) => r.status == 200  })){} else {console.log(`response_ScriptArquetipo: ${response_ScriptArquetipo.body}`)};  //Imprimir error solo cuando suceda
 sleep(randomIntBetween(5, 10)); //configuración de esperas
-}
-export function handleSummary(data) {
-    return generalSummary(data) //Datos para la generación de reportes
 }
