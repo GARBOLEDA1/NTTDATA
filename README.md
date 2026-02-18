@@ -5,7 +5,7 @@
 1. Gradle y tener agregado en el path de la variable de entorno
 2. IDE IntelliJ IDEA
 3. Java 17
-4. Ejecutar escenario user.future
+4. Ejecutar escenario mascota.future
 
 Saludos Galo Arboleda
 
@@ -20,7 +20,7 @@ Saludos Galo Arboleda
 Clonar el proyecto
 
 ```bash
-  git clone https://github.com/andrettebc/petStore
+  git clone https://github.com/GARBOLEDA1/NTTDATA.git
 ```
 Entrar al directorio del proyecto
 
@@ -40,7 +40,7 @@ Dirijase al path :
 ```bash
 src\test\java\features\petStore-karate\
 ```
-En el archivo **user.feature** Presionar Click derecho y ejecutar la opcion > Run 'Feature: user'
+En el archivo **mascota.feature** Presionar Click derecho y ejecutar la opcion > Run 'Feature: mascota'
 
 
 ## Reporte

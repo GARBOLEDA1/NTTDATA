@@ -30,12 +30,15 @@ test {
 
 sourceSets {
     test {
+        java {
+            srcDirs = ['src/test/java']
+        }
         resources {
-            srcDir file('src/test/java')
-            exclude '**/*.java'
+            srcDirs = ['src/test/resources']
         }
     }
 }
+
 
 task karateDebug(type: JavaExec) {
     classpath = sourceSets.test.runtimeClasspath

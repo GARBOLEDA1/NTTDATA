@@ -1,0 +1,19 @@
+{
+  "newPet": {
+    "category": { "id": 0, "name": "perros" },
+    "name": "Firulais",
+    "photoUrls": [ "http://example.com/foto.png" ],
+    "tags": [ { "id": 1, "name": "etiqueta" } ],
+    "status": "available"
+  },
+  "updatedPet": {
+    "category": { "id": 0, "name": "perros" },
+    "name": "Max",
+    "photoUrls": [ "http://example.com/foto.png" ],
+    "tags": [ { "id": 1, "name": "etiqueta" } ],
+    "status": "sold"
+  },
+  "invalidPet": {
+    "id": "texto_en_lugar_de_numero"
+  }
+}
